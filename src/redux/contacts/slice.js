@@ -3,7 +3,7 @@ import {
   fetchPhonebook,
   addContact,
   deleteContact,
-} from 'redux/phonebookOperations';
+} from 'redux/contacts/operations';
 import { initialContacts } from '../initialState';
 
 const phonebookSlice = createSlice({
@@ -13,6 +13,7 @@ const phonebookSlice = createSlice({
     [fetchPhonebook.fulfilled]: (state, { payload }) => {
       state.contacts = payload;
       state.isLoading = false;
+      state.error = null;
     },
     [fetchPhonebook.pending]: state => {
       state.isLoading = true;
@@ -50,7 +51,5 @@ const phonebookSlice = createSlice({
     },
   },
 });
-
-export const { addContacts, removeContact } = phonebookSlice.actions;
 
 export default phonebookSlice.reducer;

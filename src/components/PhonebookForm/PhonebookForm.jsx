@@ -1,15 +1,14 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-// import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addContact } from 'redux/phonebookOperations';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contacts/operations';
+import { selectContacts } from 'redux/selectors';
 
 import { FormContainer, Label, FormButton } from './PhonebookForm.styled';
 
-function PhonebookForm({ onSubmit }) {
-  const contacts = useSelector(getContacts);
+function PhonebookForm() {
+  const contacts = useSelector(selectContacts);
   const initialValues = { name: '', number: '' };
 
   const dispatch = useDispatch();

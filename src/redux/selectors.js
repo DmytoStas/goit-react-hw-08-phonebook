@@ -1,7 +1,13 @@
-export const getContacts = state => state.phonebook.contacts;
+export const selectIsLoggedIn = state => state.auth.isLoggedIn;
 
-export const getIsLoading = state => state.phonebook.isLoading;
+export const selectUser = state => state.auth.user;
 
-export const getError = state => state.phonebook.error;
+export const selectIsRefreshing = state => state.auth.isRefreshing;
 
-export const getFilter = state => state.filter;
+export const selectContacts = state => state.phonebook.contacts;
+
+export const selectLoading = state => state.phonebook.isLoading;
+
+export const selectError = state => state.phonebook.error;
+
+export const selectFilter = state => state.filter;

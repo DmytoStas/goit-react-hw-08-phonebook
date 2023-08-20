@@ -1,29 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import Loader from '../Loader/Loader';
+import Loader from 'components/Loader';
 
 import {
-  getContacts,
-  getFilter,
-  getIsLoading,
-  getError,
+  selectContacts,
+  selectFilter,
+  selectLoading,
+  selectError,
 } from 'redux/selectors';
 
 import { ContactsListUl, ListItemWrapp } from './ContactsList.styled';
-import { useEffect } from 'react';
-import { fetchPhonebook, deleteContact } from 'redux/phonebookOperations';
+import { deleteContact } from 'redux/contacts/operations';
 
 function ContactsList() {
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const isLoading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchPhonebook());
-  }, [dispatch]);
 
   const visibleContacts = () => {
     const normalizedFilter = filter.toLowerCase();
