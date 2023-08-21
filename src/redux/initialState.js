@@ -5,6 +5,6 @@ export const initialAuth = {
   isRefreshing: false,
 };
 
-export const initialContacts = { contacts: [], isLoading: false, error: null };
+export const initialContacts = { contacts: [], error: null };
 
 export const initialFilter = '';

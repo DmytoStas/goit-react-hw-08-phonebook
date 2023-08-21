@@ -6,12 +6,21 @@ import {
   Label,
   FormButton,
 } from 'components/PhonebookForm/PhonebookForm.styled';
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/auth/operations';
 
 const LogInForm = () => {
   const initialValues = { email: '', password: '' };
+  const dispatch = useDispatch();
 
   const schema = Yup.object().shape({
-    email: Yup.string().required('Email required').email('Invalid email'),
+    email: Yup.string()
+      .required('Email required')
+      .email('Invalid email')
+      .matches(
+        /^[a-z0-9]+@+[mail]+\.[a-z]{2,3}/,
+        'Invalid email. Template is "randomString@mail.com"'
+      ),
     password: Yup.string()
       .length(8)
       .required('Password required')
@@ -19,8 +28,8 @@ const LogInForm = () => {
   });
 
   const handleSubmit = (values, actions) => {
-    // const { email, password } = values;
-    // dispatch(addContact(newContact));
+    dispatch(logIn(values));
+    actions.resetForm();
   };
 
   return (
@@ -29,7 +38,7 @@ const LogInForm = () => {
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
-      <Form autoComplete="off">
+      <Form>
         <FormContainer>
           <Label htmlFor="email">Email</Label>
           <Field type="email" name="email" title="Must a regular email" />
@@ -42,7 +51,7 @@ const LogInForm = () => {
             title="Password must be digits"
           />
           <ErrorMessage name="password" />
-          <FormButton type="submit">Add contact</FormButton>
+          <FormButton type="submit">Log In</FormButton>
         </FormContainer>
       </Form>
     </Formik>

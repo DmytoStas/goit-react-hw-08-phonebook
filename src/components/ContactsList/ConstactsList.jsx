@@ -1,24 +1,30 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
+import { selectContacts, selectFilter, selectError } from 'redux/selectors';
+import { ContactsListUl } from './ContactsList.styled';
+import { fetchPhonebook } from 'redux/contacts/operations';
+import ContactItem from 'components/ContactItem';
 import Loader from 'components/Loader';
 
-import {
-  selectContacts,
-  selectFilter,
-  selectLoading,
-  selectError,
-} from 'redux/selectors';
+const ContactsList = () => {
+  const [showLoader, setShowLoader] = useState(false);
 
-import { ContactsListUl, ListItemWrapp } from './ContactsList.styled';
-import { deleteContact } from 'redux/contacts/operations';
-
-function ContactsList() {
-  const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getPhonebook = async () => {
+      setShowLoader(true);
+      await dispatch(fetchPhonebook());
+      setShowLoader(false);
+    };
+
+    getPhonebook();
+  }, [dispatch]);
 
   const visibleContacts = () => {
     const normalizedFilter = filter.toLowerCase();
@@ -30,30 +36,14 @@ function ContactsList() {
 
   return (
     <>
-      {isLoading && !error && <Loader />}
+      {showLoader && !error && <Loader />}
       <ContactsListUl>
         {visibleContacts().map(contact => (
-          <li key={contact.id}>
-            <ListItemWrapp>
-              <p>
-                {contact.name}: <span>{contact.number}</span>
-              </p>
-
-              <button
-                type="button"
-                id={contact.id}
-                onClick={() => {
-                  dispatch(deleteContact(`${contact.id}`));
-                }}
-              >
-                Delete
-              </button>
-            </ListItemWrapp>
-          </li>
+          <ContactItem key={contact.id} contact={contact} />
         ))}
       </ContactsListUl>
     </>
   );
-}
+};
 
 export default ContactsList;

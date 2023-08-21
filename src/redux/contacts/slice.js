@@ -5,51 +5,48 @@ import {
   deleteContact,
 } from 'redux/contacts/operations';
 import { initialContacts } from '../initialState';
+import { logOut } from 'redux/auth/operations';
 
 const phonebookSlice = createSlice({
   name: 'phonebook',
   initialState: initialContacts,
-  extraReducers: {
-    [fetchPhonebook.fulfilled]: (state, { payload }) => {
-      state.contacts = payload;
-      state.isLoading = false;
-      state.error = null;
-    },
-    [fetchPhonebook.pending]: state => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    [fetchPhonebook.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload;
-    },
-    [addContact.fulfilled]: (state, { payload }) => {
-      state.contacts.push(payload);
-      state.isLoading = false;
-    },
-    [addContact.pending]: state => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    [addContact.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload;
-    },
-    [deleteContact.fulfilled]: (state, { payload }) => {
-      state.contacts = state.contacts.filter(
-        contact => contact.id !== payload.id
-      );
-      state.isLoading = false;
-    },
-    [deleteContact.pending]: state => {
-      state.isLoading = true;
-      state.error = null;
-    },
-    [deleteContact.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload;
-    },
-  },
+  extraReducers: builder =>
+    builder
+      .addCase(fetchPhonebook.fulfilled, (state, { payload }) => {
+        state.contacts = payload;
+
+        state.error = null;
+      })
+      .addCase(fetchPhonebook.pending, state => {
+        state.error = null;
+      })
+      .addCase(fetchPhonebook.rejected, (state, { payload }) => {
+        state.error = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.contacts.push(payload);
+      })
+      .addCase(addContact.pending, state => {
+        state.error = null;
+      })
+      .addCase(addContact.rejected, (state, { payload }) => {
+        state.error = payload;
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== payload.id
+        );
+      })
+      .addCase(deleteContact.pending, state => {
+        state.error = null;
+      })
+      .addCase(deleteContact.rejected, (state, { payload }) => {
+        state.error = payload;
+      })
+      .addCase(logOut.fulfilled, state => {
+        state.items = [];
+        state.error = null;
+      }),
 });
 
 export default phonebookSlice.reducer;

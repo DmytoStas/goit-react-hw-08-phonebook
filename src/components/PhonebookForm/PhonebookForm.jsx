@@ -6,10 +6,13 @@ import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/selectors';
 
 import { FormContainer, Label, FormButton } from './PhonebookForm.styled';
+import Loader from 'components/Loader/Loader';
+import { useState } from 'react';
 
 function PhonebookForm() {
   const contacts = useSelector(selectContacts);
   const initialValues = { name: '', number: '' };
+  const [isLoader, setIsLoader] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -29,7 +32,7 @@ function PhonebookForm() {
       ),
   });
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const { name, number } = values;
     const hasContact = contacts.some(contact => {
       const normalizedName = contact.name.toLowerCase();
@@ -42,7 +45,9 @@ function PhonebookForm() {
         number,
       };
 
-      dispatch(addContact(newContact));
+      setIsLoader(true);
+      await dispatch(addContact(newContact));
+      setIsLoader(false);
       actions.resetForm();
     } else {
       alert(`${name} is already in contacts.`);
@@ -71,7 +76,9 @@ function PhonebookForm() {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
           <ErrorMessage name="number" />
-          <FormButton type="submit">Add contact</FormButton>
+          <FormButton type="submit">
+            Add contact {isLoader && <Loader />}
+          </FormButton>
         </FormContainer>
       </Form>
     </Formik>

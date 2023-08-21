@@ -21,7 +21,13 @@ const SignUpForm = () => {
         /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
         'Invalid name'
       ),
-    email: Yup.string().required('Email required').email('Invalid email'),
+    email: Yup.string()
+      .required('Email required')
+      .email('Invalid email')
+      .matches(
+        /^[a-z0-9]+@+[mail]+\.[a-z]{2,3}/,
+        'Invalid email. Template is "randomString@mail.com"'
+      ),
     password: Yup.string()
       .length(8)
       .required('Password required')
@@ -29,10 +35,8 @@ const SignUpForm = () => {
   });
 
   const handleSubmit = (values, actions) => {
-    // const { name, email, password } = values;
-
-    console.log(values);
     dispatch(signUp(values));
+    actions.resetForm();
   };
 
   return (
