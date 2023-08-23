@@ -10,7 +10,7 @@ function Filter() {
 
   return (
     <div>
-      <p>Find contacts by name</p>
+      <p>Find contact by name</p>
       <input
         type="text"
         value={filter}

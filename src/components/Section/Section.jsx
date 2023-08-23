@@ -1,12 +1,21 @@
+import { Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { SectionContainer } from './Section.styled';
 
 function Section({ title, children }) {
   return (
-    <SectionContainer>
-      <h1>{title}</h1>
+    <section>
+      <Typography
+        fontSize="26px"
+        variant="h1"
+        fontWeight="700"
+        color="#eb44d6"
+        marginBottom="10px"
+        textAlign="center"
+      >
+        {title}
+      </Typography>
       <>{children}</>
-    </SectionContainer>
+    </section>
   );
 }
 

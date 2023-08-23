@@ -1,31 +1,15 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-import {
-  FormContainer,
-  Label,
-  FormButton,
-} from 'components/PhonebookForm/PhonebookForm.styled';
+import { Formik, Form, Field } from 'formik';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Avatar, Grid, Paper, Typography, Button, Box } from '@mui/material';
 import { useDispatch } from 'react-redux';
+
 import { logIn } from 'redux/auth/operations';
+import { validationSchema } from 'components/LogInForm/validationSchema';
+import { EmailField, PasswordField } from 'components/FormFields';
 
 const LogInForm = () => {
   const initialValues = { email: '', password: '' };
   const dispatch = useDispatch();
-
-  const schema = Yup.object().shape({
-    email: Yup.string()
-      .required('Email required')
-      .email('Invalid email')
-      .matches(
-        /^[a-z0-9]+@+[mail]+\.[a-z]{2,3}/,
-        'Invalid email. Template is "randomString@mail.com"'
-      ),
-    password: Yup.string()
-      .length(8)
-      .required('Password required')
-      .matches(/(?=.*[0-9])/, 'Invalid password'),
-  });
 
   const handleSubmit = (values, actions) => {
     dispatch(logIn(values));
@@ -33,28 +17,51 @@ const LogInForm = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
-    >
-      <Form>
-        <FormContainer>
-          <Label htmlFor="email">Email</Label>
-          <Field type="email" name="email" title="Must a regular email" />
-          <ErrorMessage name="email" />
+    <>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+        sx={{
+          minHeight: '80vh',
+          mb: 2,
+        }}
+      >
+        <Box
+          sx={{
+            py: 4,
+            px: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+            <LockOutlinedIcon />
+          </Avatar>
 
-          <Label htmlFor="password">Password</Label>
-          <Field
-            type="password"
-            name="password"
-            title="Password must be digits"
-          />
-          <ErrorMessage name="password" />
-          <FormButton type="submit">Log In</FormButton>
-        </FormContainer>
-      </Form>
-    </Formik>
+          <Typography component="h1" variant="h5">
+            Log in
+          </Typography>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <Field component={EmailField} />
+
+              <Field component={PasswordField} />
+              <Button type="submit">Log In</Button>
+            </Form>
+          </Formik>
+        </Box>
+      </Grid>
+    </>
   );
 };
 

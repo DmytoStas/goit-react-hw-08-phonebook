@@ -1,38 +1,16 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-import {
-  FormContainer,
-  Label,
-  FormButton,
-} from 'components/PhonebookForm/PhonebookForm.styled';
-import { signUp } from 'redux/auth/operations';
+import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Avatar, Grid, Paper, Typography, Button, Box } from '@mui/material';
+
+import { signUp } from 'redux/auth/operations';
+import { validationSchema } from './validationSchema';
+import { NameField, EmailField, PasswordField } from 'components/FormFields';
 
 const SignUpForm = () => {
   const initialValues = { name: '', email: '', password: '' };
 
   const dispatch = useDispatch();
-
-  const schema = Yup.object().shape({
-    name: Yup.string()
-      .required('Name required')
-      .matches(
-        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
-        'Invalid name'
-      ),
-    email: Yup.string()
-      .required('Email required')
-      .email('Invalid email')
-      .matches(
-        /^[a-z0-9]+@+[mail]+\.[a-z]{2,3}/,
-        'Invalid email. Template is "randomString@mail.com"'
-      ),
-    password: Yup.string()
-      .length(8)
-      .required('Password required')
-      .matches(/(?=.*[0-9])/, 'Invalid password'),
-  });
 
   const handleSubmit = (values, actions) => {
     dispatch(signUp(values));
@@ -40,36 +18,53 @@ const SignUpForm = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
-    >
-      <Form autoComplete="on">
-        <FormContainer>
-          <Label htmlFor="name">Username</Label>
-          <Field
-            type="text"
-            name="name"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          />
-          <ErrorMessage name="name" />
+    <>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+        sx={{
+          minHeight: '80vh',
+          mb: 2,
+        }}
+      >
+        <Box
+          sx={{
+            py: 4,
+            px: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+            <LockOutlinedIcon />
+          </Avatar>
 
-          <Label htmlFor="email">Email</Label>
-          <Field type="email" name="email" title="Must a regular email" />
-          <ErrorMessage name="email" />
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form autoComplete="on">
+              <Field component={NameField} />
 
-          <Label htmlFor="password">Password</Label>
-          <Field
-            type="password"
-            name="password"
-            title="Password must be digits"
-          />
-          <ErrorMessage name="password" />
-          <FormButton type="submit">Sign Up</FormButton>
-        </FormContainer>
-      </Form>
-    </Formik>
+              <Field component={EmailField} />
+
+              <Field component={PasswordField} />
+              <Button type="submit">Sign Up</Button>
+            </Form>
+          </Formik>
+        </Box>
+      </Grid>
+    </>
   );
 };
 
