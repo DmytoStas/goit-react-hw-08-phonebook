@@ -3,6 +3,7 @@ export const initialAuth = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isLoading: false,
 };
 
 export const initialContacts = { contacts: [], error: null };

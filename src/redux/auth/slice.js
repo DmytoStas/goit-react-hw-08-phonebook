@@ -7,15 +7,33 @@ const authSlice = createSlice({
   initialState: initialAuth,
   extraReducers: builder =>
     builder
+      .addCase(signUp.pending, state => {
+        state.error = null;
+        state.isLoading = true;
+      })
       .addCase(signUp.fulfilled, (state, actions) => {
         state.user = actions.payload.user;
         state.token = actions.payload.token;
         state.isLoggedIn = true;
+        state.isLoading = false;
+      })
+      .addCase(signUp.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(logIn.pending, state => {
+        state.error = null;
+        state.isLoading = true;
       })
       .addCase(logIn.fulfilled, (state, actions) => {
         state.user = actions.payload.user;
         state.token = actions.payload.token;
         state.isLoggedIn = true;
+        state.isLoading = false;
+      })
+      .addCase(logIn.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       })
       .addCase(refreshUser.pending, state => {
         state.isRefreshing = true;

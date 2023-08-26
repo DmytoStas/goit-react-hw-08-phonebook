@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 
 const ContactsListUl = styled.ul`
   margin: 0;
-  padding-left: 20px;
+  padding: 0;
+  list-style: none;
 `;
 
-const ListItemWrapp = styled.div`
-  display: flex;
+const ListItemWrapp = styled.li`
   gap: 20px;
   align-items: center;
 `;

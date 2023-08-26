@@ -11,3 +11,5 @@ export const selectLoading = state => state.phonebook.isLoading;
 export const selectError = state => state.phonebook.error;
 
 export const selectFilter = state => state.filter;
+
+export const selectIsLoading = state => state.auth.isLoading;

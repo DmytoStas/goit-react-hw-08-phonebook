@@ -5,6 +5,7 @@ export const NavList = styled('ul')`
   display: flex;
   gap: 20px;
   margin-left: auto;
+  margin-right: 22px;
 
   list-style: none;
 `;
@@ -25,6 +26,6 @@ export const Link = styled(NavLink)`
   :hover,
   :focus,
   &.active {
-    color: #eb44d6;
+    color: #1976d2;
   }
 `;

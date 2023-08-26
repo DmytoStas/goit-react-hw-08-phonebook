@@ -2,11 +2,12 @@ import { Formik, Form, Field } from 'formik';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/selectors';
 
-import Loader from 'components/Loader/Loader';
+import { DotsLoader } from 'components/Loader';
 import { validationSchema } from 'components/PhonebookForm/validationSchema';
 import { ContactNameField, ContactNumberField } from 'components/FormFields';
 
@@ -58,7 +59,23 @@ function PhonebookForm() {
             <Field component={ContactNameField} />
 
             <Field component={ContactNumberField} />
-            <Button type="submit">Add contact {isLoader && <Loader />}</Button>
+            <Button
+              disabled={isLoader}
+              type="submit"
+              variant="outlined"
+              sx={{
+                fontSize: '14px',
+                width: '200px',
+                height: '30px',
+                marginTop: 1,
+                '&:hover': {
+                  color: 'white',
+                  backgroundColor: '#1976d2',
+                },
+              }}
+            >
+              {isLoader ? <DotsLoader /> : <>{<AddIcon />} Add contact</>}
+            </Button>
           </Form>
         </Formik>
       </Box>

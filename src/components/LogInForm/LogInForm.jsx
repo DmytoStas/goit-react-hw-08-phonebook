@@ -1,15 +1,18 @@
 import { Formik, Form, Field } from 'formik';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Avatar, Grid, Paper, Typography, Button, Box } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { Avatar, Typography, Button, Box } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { logIn } from 'redux/auth/operations';
 import { validationSchema } from 'components/LogInForm/validationSchema';
 import { EmailField, PasswordField } from 'components/FormFields';
+import { DotsLoader } from 'components/Loader';
+import { selectIsLoading } from 'redux/selectors';
 
 const LogInForm = () => {
   const initialValues = { email: '', password: '' };
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
 
   const handleSubmit = (values, actions) => {
     dispatch(logIn(values));
@@ -17,51 +20,51 @@ const LogInForm = () => {
   };
 
   return (
-    <>
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        md={5}
-        component={Paper}
-        elevation={6}
-        square
-        sx={{
-          minHeight: '80vh',
-          mb: 2,
-        }}
+    <Box
+      sx={{
+        py: 4,
+        px: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+        <LockOutlinedIcon />
+      </Avatar>
+
+      <Typography component="h1" variant="h5">
+        Log in
+      </Typography>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
-        <Box
-          sx={{
-            py: 4,
-            px: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+        <Form style={{ textAlign: 'center' }}>
+          <Field component={EmailField} />
 
-          <Typography component="h1" variant="h5">
-            Log in
-          </Typography>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+          <Field component={PasswordField} />
+          <Button
+            disabled={isLoading}
+            type="submit"
+            variant="outlined"
+            sx={{
+              fontSize: '16px',
+              width: '200px',
+              height: '40px',
+              marginTop: 2,
+              '&:hover': {
+                color: 'white',
+                backgroundColor: '#1976d2',
+              },
+            }}
           >
-            <Form>
-              <Field component={EmailField} />
-
-              <Field component={PasswordField} />
-              <Button type="submit">Log In</Button>
-            </Form>
-          </Formik>
-        </Box>
-      </Grid>
-    </>
+            {isLoading ? <DotsLoader /> : 'Log In'}
+          </Button>
+        </Form>
+      </Formik>
+    </Box>
   );
 };
 

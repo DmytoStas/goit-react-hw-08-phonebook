@@ -10,12 +10,18 @@ import { selectIsLoggedIn } from 'redux/selectors';
 const AppBarHeader = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const theme = createTheme({
+    breakpoints: {
+      values: {
+        lg: 1200,
+      },
+    },
     components: {
       MuiAppBar: {
         styleOverrides: {
           root: {
             background:
-              'linear-gradient(185deg,hsl(258deg 62% 33%) 0%,hsl(263deg 65% 20%) 14%,hsl(265deg 60% 12%) 45%,hsl(263deg 49% 8%) 100%)',
+              'linear-gradient(95deg, rgba(15,22,66,1) 0%, rgba(41,13,57,1) 26%, rgba(43,16,78,1) 50%, rgba(37,12,65,1) 78%, rgba(38,8,68,1) 100%)',
+            borderBottom: '1.5px solid #53406c',
           },
         },
       },
@@ -27,10 +33,17 @@ const AppBarHeader = () => {
       <AppBar
         position="static"
         sx={{
-          mb: 2,
+          position: 'relative',
+          zIndex: '1',
+          height: '60px',
         }}
       >
-        <Toolbar component="nav">
+        <Toolbar
+          component="nav"
+          sx={{
+            padding: '0 8px',
+          }}
+        >
           {!isLoggedIn ? <AuthNav /> : <UserMenu />}
         </Toolbar>
       </AppBar>

@@ -13,6 +13,7 @@ const WelcomePage = lazy(() => import('pages/WelcomePage'));
 const Phonebook = lazy(() => import('pages/Phonebook'));
 const LogIn = lazy(() => import('pages/LogIn'));
 const SignUp = lazy(() => import('pages/SignUp'));
+const NotFound = lazy(() => import('./NotFound'));
 
 const defaultTheme = createTheme();
 
@@ -51,6 +52,7 @@ const App = () => {
               <PrivateRoute redirectTo="/login" component={<Phonebook />} />
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </ThemeProvider>

@@ -1,11 +1,11 @@
 import { StyledLoader } from './Loader.styled';
 
-const Loader = () => {
+export const SpinLoader = () => {
   return (
     <StyledLoader
-      height="80"
-      width="80"
-      color="#4fa94d"
+      height="30"
+      width="30"
+      color="#1976d2"
       ariaLabel="tail-spin-loading"
       radius="1"
       wrapperStyle={{}}
@@ -14,5 +14,3 @@ const Loader = () => {
     />
   );
 };
-
-export default Loader;

@@ -1,3 +1,4 @@
+import { TextField } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { toggleFilter } from 'redux/filter/slice';
@@ -10,13 +11,17 @@ function Filter() {
 
   return (
     <div>
-      <p>Find contact by name</p>
-      <input
+      <TextField
         type="text"
+        label="Find contact by name"
         value={filter}
         onChange={e => {
           dispatch(toggleFilter(e.target.value));
         }}
+        margin="dense"
+        variant="outlined"
+        size="small"
+        fullWidth
       />
     </div>
   );
