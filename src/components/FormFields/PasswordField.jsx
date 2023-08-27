@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 
 export const PasswordField = props => {
@@ -7,7 +8,7 @@ export const PasswordField = props => {
       id="password"
       type="password"
       name="password"
-      title="Password must be digits"
+      title="Password must be digits and letters"
       label="Password*"
       value={values.password}
       onChange={handleChange}
@@ -19,4 +20,8 @@ export const PasswordField = props => {
       fullWidth
     />
   );
+};
+
+PasswordField.propTypes = {
+  props: PropTypes.object,
 };

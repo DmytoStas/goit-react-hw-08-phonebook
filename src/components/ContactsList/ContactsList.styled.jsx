@@ -8,7 +8,11 @@ const ContactsListUl = styled.ul`
 
 const ListItemWrapp = styled.li`
   gap: 20px;
+  margin-top: 12px;
   align-items: center;
+  &:first-of-type {
+    margin-top: 0;
+  }
 `;
 
 export { ContactsListUl, ListItemWrapp };

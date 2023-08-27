@@ -8,6 +8,11 @@ import { validationSchema } from './validationSchema';
 import { NameField, EmailField, PasswordField } from 'components/FormFields';
 import { selectIsLoading } from 'redux/selectors';
 import { DotsLoader } from 'components/Loader';
+import {
+  authFormContainerStyle,
+  avatarStyle,
+  formSubmButnStyle,
+} from 'components/authFormsStyles';
 
 const SignUpForm = () => {
   const initialValues = { name: '', email: '', password: '' };
@@ -21,22 +26,15 @@ const SignUpForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        py: 4,
-        px: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+    <Box sx={authFormContainerStyle}>
+      <Avatar sx={avatarStyle}>
         <LockOutlinedIcon />
       </Avatar>
 
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -52,16 +50,7 @@ const SignUpForm = () => {
             disabled={isLoading}
             type="submit"
             variant="outlined"
-            sx={{
-              fontSize: '16px',
-              width: '200px',
-              height: '40px',
-              marginTop: 2,
-              '&:hover': {
-                color: 'white',
-                backgroundColor: '#1976d2',
-              },
-            }}
+            sx={formSubmButnStyle}
           >
             {isLoading ? <DotsLoader /> : 'Sign Up'}
           </Button>

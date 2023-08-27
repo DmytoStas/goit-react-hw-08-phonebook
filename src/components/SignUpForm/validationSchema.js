@@ -11,11 +11,14 @@ export const validationSchema = Yup.object().shape({
     .required('Email required')
     .email('Invalid email')
     .matches(
-      /^[a-z0-9]+@+[mail]+\.[a-z]{2,3}/,
-      'Invalid email. Template is "randomString@mail.com"'
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      'Invalid email"'
     ),
   password: Yup.string()
-    .length(8)
+    .min(8)
     .required('Password required')
-    .matches(/(?=.*[0-9])/, 'Invalid password'),
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      'Invalid password. It must contain letters and numbers only.'
+    ),
 });

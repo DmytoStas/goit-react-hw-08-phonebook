@@ -1,11 +1,13 @@
+import { useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
 import AuthNav from 'components/AuthNav';
 import UserMenu from 'components/UserMenu';
-import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from 'redux/selectors';
+import { Link } from 'components/AuthNav/AuthNav.styled';
+import { Typography } from '@mui/material';
 
 const AppBarHeader = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -44,6 +46,18 @@ const AppBarHeader = () => {
             padding: '0 8px',
           }}
         >
+          <Link to="/">
+            <Typography
+              component={'span'}
+              sx={{
+                marginLeft: '22px',
+                fontWeight: '700',
+                letterSpacing: '3px',
+              }}
+            >
+              Phonebook
+            </Typography>
+          </Link>
           {!isLoggedIn ? <AuthNav /> : <UserMenu />}
         </Toolbar>
       </AppBar>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -18,8 +19,10 @@ const signUp = createAsyncThunk(
     try {
       const resp = await axios.post('/users/signup', credentials);
       authHeader.set(resp.data.token);
+      toast.success(`Welcome to the Phonebook!`);
       return resp.data;
     } catch (error) {
+      toast.error(`Ooops ${error.response.statusText}`);
       return rejectWithValue(error.message);
     }
   }
@@ -31,8 +34,11 @@ const logIn = createAsyncThunk(
     try {
       const resp = await axios.post('/users/login', credentials);
       authHeader.set(resp.data.token);
+      toast.success(`Welcome back`);
       return resp.data;
     } catch (error) {
+      toast.error(`Ooops ${error.response.statusText}`);
+      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -44,8 +50,10 @@ const logOut = createAsyncThunk(
     try {
       const resp = await axios.post('/users/logout');
       authHeader.unset();
+      toast.success(`Log out successful`);
       return resp.data;
     } catch (error) {
+      toast.error(`Ooops ${error.response.statusText}`);
       return rejectWithValue(error.message);
     }
   }
@@ -66,6 +74,7 @@ const refreshUser = createAsyncThunk(
       const resp = await axios.get('/users/current');
       return resp.data;
     } catch (error) {
+      toast.error(`Ooops ${error.response.statusText}`);
       return rejectWithValue(error.message);
     }
   }

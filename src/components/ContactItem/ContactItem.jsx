@@ -16,9 +16,16 @@ import PhoneIcon from '@mui/icons-material/Phone';
 
 import { SpinLoader } from 'components/Loader';
 import { deleteContact } from 'redux/contacts/operations';
-import { ListItemWrapp } from '../ContactsList/ContactsList.styled';
+import { ListItemWrapp } from 'components/ContactsList/ContactsList.styled';
 import ContactModal from 'components/Modal/Modal';
-import { cardStyles } from './Style';
+import {
+  cardActionStyle,
+  cardContentStyle,
+  cardStyles,
+  cardTextStyle,
+  contactInfoWrapStyle,
+  iconButtonStyle,
+} from './contactItemStyles';
 
 const ContactItem = ({ contact }) => {
   const { name, id, number } = contact;
@@ -37,70 +44,33 @@ const ContactItem = ({ contact }) => {
   return (
     <ListItemWrapp>
       <Card variant="outlined" sx={cardStyles}>
-        <CardContent
-          sx={{
-            display: 'flex',
-            flexFlow: 'column',
-            gap: '10px',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
+        <CardContent sx={cardContentStyle}>
+          <Box sx={contactInfoWrapStyle}>
             <PersonIcon
               size="small"
               sx={{
                 color: '#1976d2',
               }}
             />
-            <Typography
-              component="p"
-              sx={{
-                width: '142px',
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-              }}
-            >
+            <Typography component="p" sx={cardTextStyle}>
               {name}
             </Typography>
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-            }}
-          >
+          <Box sx={contactInfoWrapStyle}>
             <PhoneIcon
               size="small"
               sx={{
                 color: '#1976d2',
               }}
             />
-            <Typography
-              component="p"
-              sx={{
-                width: '142px',
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-              }}
-            >
+            <Typography component="p" sx={cardTextStyle}>
               {number}
             </Typography>
           </Box>
         </CardContent>
 
-        <CardActions
-          sx={{
-            width: '92px',
-            justifyContent: 'center',
-          }}
-        >
+        <CardActions sx={cardActionStyle}>
           {isLoadingDelete ? (
             <SpinLoader />
           ) : (
@@ -112,11 +82,7 @@ const ContactItem = ({ contact }) => {
                   toggleModal();
                 }}
                 size="small"
-                sx={{
-                  '&:hover': {
-                    color: '#1976d2',
-                  },
-                }}
+                sx={iconButtonStyle}
               >
                 <EditIcon />
               </IconButton>
@@ -127,11 +93,7 @@ const ContactItem = ({ contact }) => {
                   handleDeleteContact(id);
                 }}
                 size="small"
-                sx={{
-                  '&:hover': {
-                    color: '#1976d2',
-                  },
-                }}
+                sx={iconButtonStyle}
               >
                 <DeleteIcon />
               </IconButton>
@@ -140,13 +102,7 @@ const ContactItem = ({ contact }) => {
         </CardActions>
       </Card>
       {isModalShow && (
-        <ContactModal
-          onClose={toggleModal}
-          id={id}
-          name={name}
-          number={number}
-          isOpen={isModalShow}
-        />
+        <ContactModal onClose={toggleModal} id={id} isOpen={isModalShow} />
       )}
     </ListItemWrapp>
   );

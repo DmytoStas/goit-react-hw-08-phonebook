@@ -10,7 +10,7 @@ function Filter() {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <>
       <TextField
         type="text"
         label="Find contact by name"
@@ -23,7 +23,7 @@ function Filter() {
         size="small"
         fullWidth
       />
-    </div>
+    </>
   );
 }
 

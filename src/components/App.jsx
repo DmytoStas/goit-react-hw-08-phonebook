@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
@@ -55,6 +57,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </ThemeProvider>
   );
 };

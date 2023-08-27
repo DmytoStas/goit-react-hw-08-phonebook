@@ -38,6 +38,10 @@ const Phonebook = () => {
           <PhonebookForm />
           <Box
             sx={{
+              display: 'flex',
+              flexFlow: 'column',
+              alignItems: 'center',
+              gap: '10px',
               width: '300px',
             }}
           >
@@ -45,7 +49,6 @@ const Phonebook = () => {
               fontSize="20px"
               variant="h2"
               color="#000000"
-              marginBottom="10px"
               textAlign="center"
             >
               Contacts
@@ -53,12 +56,12 @@ const Phonebook = () => {
             {contacts.length > 0 ? (
               <>
                 <Filter />
-                {showLoader && !error && <SpinLoader />}
                 <ContactsList />
               </>
             ) : (
               'No contacts yet ...'
             )}
+            {showLoader && !error && <SpinLoader />}
           </Box>
         </Box>
       </Section>

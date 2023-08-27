@@ -8,6 +8,11 @@ import { validationSchema } from 'components/LogInForm/validationSchema';
 import { EmailField, PasswordField } from 'components/FormFields';
 import { DotsLoader } from 'components/Loader';
 import { selectIsLoading } from 'redux/selectors';
+import {
+  avatarStyle,
+  formSubmButnStyle,
+  authFormContainerStyle,
+} from '../authFormsStyles';
 
 const LogInForm = () => {
   const initialValues = { email: '', password: '' };
@@ -20,22 +25,15 @@ const LogInForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        py: 4,
-        px: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+    <Box sx={authFormContainerStyle}>
+      <Avatar sx={avatarStyle}>
         <LockOutlinedIcon />
       </Avatar>
 
       <Typography component="h1" variant="h5">
         Log in
       </Typography>
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -49,16 +47,7 @@ const LogInForm = () => {
             disabled={isLoading}
             type="submit"
             variant="outlined"
-            sx={{
-              fontSize: '16px',
-              width: '200px',
-              height: '40px',
-              marginTop: 2,
-              '&:hover': {
-                color: 'white',
-                backgroundColor: '#1976d2',
-              },
-            }}
+            sx={formSubmButnStyle}
           >
             {isLoading ? <DotsLoader /> : 'Log In'}
           </Button>

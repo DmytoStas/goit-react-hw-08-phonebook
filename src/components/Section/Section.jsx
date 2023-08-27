@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Section({ title, children }) {
   return (
-    <section style={{ height: '100vh' }}>
+    <section>
       <Typography
         fontSize="30px"
         variant="h1"

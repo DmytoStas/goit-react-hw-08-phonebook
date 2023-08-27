@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 
 export const EmailField = props => {
@@ -19,4 +20,8 @@ export const EmailField = props => {
       fullWidth
     />
   );
+};
+
+EmailField.propTypes = {
+  props: PropTypes.object,
 };

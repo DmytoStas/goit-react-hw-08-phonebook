@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { toast } from 'react-toastify';
 
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/selectors';
@@ -10,11 +11,15 @@ import { selectContacts } from 'redux/selectors';
 import { DotsLoader } from 'components/Loader';
 import { validationSchema } from 'components/PhonebookForm/validationSchema';
 import { ContactNameField, ContactNumberField } from 'components/FormFields';
+import {
+  phonebookFormContainerStyles,
+  submBtnStyle,
+} from './phonebookFormStyles';
 
-function PhonebookForm() {
+const PhonebookForm = () => {
+  const [isLoader, setIsLoader] = useState(false);
   const contacts = useSelector(selectContacts);
   const initialValues = { name: '', number: '' };
-  const [isLoader, setIsLoader] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,51 +41,33 @@ function PhonebookForm() {
       setIsLoader(false);
       actions.resetForm();
     } else {
-      alert(`${name} is already in contacts.`);
+      toast.error(`${name} is already in contacts.`);
     }
   };
 
   return (
-    <>
-      <Box
-        sx={{
-          width: '200px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
+    <Box sx={phonebookFormContainerStyles}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          <Form autoComplete="off">
-            <Field component={ContactNameField} />
+        <Form autoComplete="off">
+          <Field component={ContactNameField} />
 
-            <Field component={ContactNumberField} />
-            <Button
-              disabled={isLoader}
-              type="submit"
-              variant="outlined"
-              sx={{
-                fontSize: '14px',
-                width: '200px',
-                height: '30px',
-                marginTop: 1,
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: '#1976d2',
-                },
-              }}
-            >
-              {isLoader ? <DotsLoader /> : <>{<AddIcon />} Add contact</>}
-            </Button>
-          </Form>
-        </Formik>
-      </Box>
-    </>
+          <Field component={ContactNumberField} />
+          <Button
+            disabled={isLoader}
+            type="submit"
+            variant="outlined"
+            sx={submBtnStyle}
+          >
+            {isLoader ? <DotsLoader /> : <>{<AddIcon />} Add contact</>}
+          </Button>
+        </Form>
+      </Formik>
+    </Box>
   );
-}
+};
 
 export default PhonebookForm;

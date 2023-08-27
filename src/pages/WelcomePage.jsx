@@ -16,6 +16,7 @@ const WelcomePage = () => {
       sx={{
         textAlign: 'center',
         paddingTop: '73px',
+        height: '200px',
       }}
     >
       <Typography
