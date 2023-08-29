@@ -21,7 +21,6 @@ const LogInForm = () => {
 
   const handleSubmit = (values, actions) => {
     dispatch(logIn(values));
-    actions.resetForm();
   };
 
   return (

@@ -102,7 +102,11 @@ const ContactItem = ({ contact }) => {
         </CardActions>
       </Card>
       {isModalShow && (
-        <ContactModal onClose={toggleModal} id={id} isOpen={isModalShow} />
+        <ContactModal
+          onClose={toggleModal}
+          contact={contact}
+          isOpen={isModalShow}
+        />
       )}
     </ListItemWrapp>
   );

@@ -38,7 +38,6 @@ const logIn = createAsyncThunk(
       return resp.data;
     } catch (error) {
       toast.error(`Ooops ${error.response.statusText}`);
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }

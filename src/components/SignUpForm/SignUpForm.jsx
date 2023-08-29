@@ -22,7 +22,6 @@ const SignUpForm = () => {
 
   const handleSubmit = (values, actions) => {
     dispatch(signUp(values));
-    actions.resetForm();
   };
 
   return (

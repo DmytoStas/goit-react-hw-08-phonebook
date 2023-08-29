@@ -15,10 +15,15 @@ import { updateContact } from 'redux/contacts/operations';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const ContactModal = ({ onClose, id, isOpen }) => {
+const ContactModal = ({ onClose, contact, isOpen }) => {
+  const { id, name, number } = contact;
   const [isLoader, setIsLoader] = useState(false);
   const contacts = useSelector(selectContacts);
-  const initialValues = { name: '', number: '' };
+
+  const initialValues = {
+    name,
+    number,
+  };
 
   const dispatch = useDispatch();
 
@@ -30,22 +35,35 @@ const ContactModal = ({ onClose, id, isOpen }) => {
       number,
     };
 
-    const findPrevContactInfo = () => {
-      const prevContact = contacts.filter(contact => id === contact.id);
-      return prevContact[0];
-    };
+    const isNameInContacts = contacts.some(
+      contact => name === contact.name && id !== contact.id
+    );
 
-    if (name === '' && number === '') {
+    if (isNameInContacts) {
+      toast.error(
+        `The contact with the name ${name} is already in your phonebook!`
+      );
+      return;
+    }
+
+    if (name === initialValues.name && number === initialValues.number) {
+      toast.error('There are no changing!');
+      return;
+    }
+
+    if (name === initialValues.name && number === initialValues.number) {
+      toast.error('There are no changing!');
+      return;
+    }
+
+    if (!name && !number) {
       toast.error('All the fields are empty!');
       return;
     }
 
-    if (name === '') {
-      updatedContact.name = findPrevContactInfo().name;
-    }
-
-    if (number === '') {
-      updatedContact.number = findPrevContactInfo().number;
+    if (!name || !number) {
+      toast.error(`The fields shouldn't be empty!`);
+      return;
     }
 
     setIsLoader(true);
@@ -108,11 +126,9 @@ const ContactModal = ({ onClose, id, isOpen }) => {
 };
 
 ContactModal.propTypes = {
-  contact: PropTypes.shape({
-    onClose: PropTypes.func.isRequired,
-    id: PropTypes.string.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-  }),
+  onClose: PropTypes.func.isRequired,
+  contact: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default ContactModal;
