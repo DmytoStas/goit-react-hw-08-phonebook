@@ -35,9 +35,10 @@ const ContactModal = ({ onClose, contact, isOpen }) => {
       number,
     };
 
-    const isNameInContacts = contacts.some(
-      contact => name === contact.name && id !== contact.id
-    );
+    const isNameInContacts = contacts.some(contact => {
+      const normalizedName = contact.name.toLowerCase();
+      return name.toLowerCase() === normalizedName && id !== contact.id;
+    });
 
     if (isNameInContacts) {
       toast.error(
