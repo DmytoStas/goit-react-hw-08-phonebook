@@ -31,6 +31,7 @@ const Phonebook = () => {
     <Box
       sx={{
         paddingTop: 3.8,
+        paddingBottom: 3.8,
       }}
     >
       <Section title={'Phonebook'}>
