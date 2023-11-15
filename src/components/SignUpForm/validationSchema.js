@@ -19,6 +19,6 @@ export const validationSchema = Yup.object().shape({
     .required('Password required')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      'Invalid password. It must contain letters and numbers only.'
+      'Invalid password. It must contain letters and numbers only'
     ),
 });

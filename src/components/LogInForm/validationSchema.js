@@ -11,8 +11,5 @@ export const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(8)
     .required('Password required')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      'Invalid password.  It must contain letters and numbers only.'
-    ),
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Invalid password'),
 });

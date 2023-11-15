@@ -46,18 +46,21 @@ const AppBarHeader = () => {
             padding: '0 8px',
           }}
         >
-          <Link to="/">
-            <Typography
-              component={'span'}
-              sx={{
-                marginLeft: '22px',
-                fontWeight: '700',
-                letterSpacing: '3px',
-              }}
-            >
-              Phonebook
-            </Typography>
-          </Link>
+          {!isLoggedIn && (
+            <Link to="/">
+              <Typography
+                component={'span'}
+                sx={{
+                  marginLeft: '22px',
+                  fontWeight: '700',
+                  letterSpacing: '3px',
+                }}
+              >
+                Phonebook
+              </Typography>
+            </Link>
+          )}
+
           {!isLoggedIn ? <AuthNav /> : <UserMenu />}
         </Toolbar>
       </AppBar>

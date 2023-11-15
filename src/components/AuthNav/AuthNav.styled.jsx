@@ -23,9 +23,9 @@ export const Link = styled(NavLink)`
     margin-right: 0;
   }
 
-  :hover,
-  :focus,
-  &.active {
+  ul &:hover,
+  ul &:focus,
+  ul &.active {
     color: #1976d2;
   }
 `;
